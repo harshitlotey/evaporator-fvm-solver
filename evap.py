@@ -155,7 +155,9 @@ for o in range(5):
             dPLiquidOnly = f_satL * dl/tubeID * G_ref**2/(2*rho_ref_satL)
             dP_fric = dPLiquidOnly * psi2
 
-            voidFraction = lambda x: 1/(1 + ((1-x)/x)*(rho_ref_satV/rho_ref_satL))
+            def voidFraction(x): 
+                return 1/(1 + ((1-x)/x)*(rho_ref_satV/rho_ref_satL))
+            
             x[u+1] = (H[u+1] - H_ref_satL)/(H_ref_satV - H_ref_satL)
 
             def momentumFlux(x, voidFraction):
