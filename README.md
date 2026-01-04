@@ -12,13 +12,13 @@ Fluid & Operational Scope: Built on the CoolProp wrapper, the solver supports a 
 
 * **Discretized Domain:** Divides the coil into user-defined segments to capture local property variations (quality, enthalpy, temperature).
 * **Physics-Based Correlations:**
-    * **Boiling Heat Transfer:** Implements **Kandlikar’s Correlation (1990)** to dynamically switch between nucleate boiling and convective boiling dominance based on local Boiling number ($$Bo$$) and Convection number ($$Co$$).
+    * **Boiling Heat Transfer:** Implements **Kandlikar’s Correlation (1990)** to dynamically switch between nucleate boiling and convective boiling dominance based on local Boiling number ($Bo$) and Convection number ($Co$).
     * **Two-Phase Pressure Drop:** Uses the **Friedel Correlation (1979)** for frictional pressure drop, accounting for liquid/vapor interaction.
-    * **Air-Side Heat Transfer:** Uses **Wang et al. (2000)** correlations for plain fin-and-tube geometry to determine Colburn $$j$$-factor and friction factor $$f$$.
+    * **Air-Side Heat Transfer:** Uses **Wang et al. (2000)** correlations for plain fin-and-tube geometry to determine Colburn $j$ - factor and friction factor $f$.
 
 
 * **Robust Numerical Solving:**
-    * Uses **Brent’s Method** (`scipy.optimize.root_scalar`) to iteratively solve the energy balance at the tube wall for every segment ($$Q_{air}=Q_{ref}$$).
+    * Uses **Brent’s Method** (`scipy.optimize.root_scalar`) to iteratively solve the energy balance at the tube wall for every segment ($Q_{air}=Q_{ref}$).
     * Implements a **row-by-row air temperature propagation** scheme, calculating the degradation of air temperature as it moves through the coil depth.
 
 ### Governing Equations & Methodology
@@ -30,7 +30,7 @@ The solver iterates through the tube length $L$, updating the refrigerant state 
 $$H_{i+1} = H_i + \frac{dQ_{segment}}{\dot{m}_{ref}}$$
 
 **2. Wall Temperature Convergence:**
-For each segment, the solver minimizes the residual function to find the wall temperature $$T_{wall}$$:
+For each segment, the solver minimizes the residual function to find the wall temperature $T_{wall}$:
 
 $$R(T_{wall}) = h_{air}A_{o}(T_{air} - T_{wall}) - h_{ref}A_{i}(T_{wall} - T_{ref})$$
 
