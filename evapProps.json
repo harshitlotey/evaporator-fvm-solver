@@ -1,0 +1,21 @@
+{
+    "Number of Iterations" : 1000,
+    "No. of Rows" : 2,
+    "No. of Holes" : 12,
+    "Transverse Pitch" : 21,
+    "Longitudinal Pitch" : 16.5,
+    "No. of Circuits" : 3,
+    "Tube OD"  : 7.4,
+    "Tube Thickness" : 0.28,
+    "Fin Thickness" : 0.12,
+    "Fin  Pitch" : 2.2,
+    "Finned Length" : 600,
+    "Refrigerant" : "R32",
+    "Operating Pressure" : 110,
+    "Inlet Air RH" : 0.5,
+    "Inlet Air Temp" : 35,
+    "Volumetric Air flow" : 2000,
+    "Atmospheric Pressure" : 14.5,
+    "Inlet Quality" : 0.21,
+    "Refrigerant Flow Rate" : 0.0141
+}
