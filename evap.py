@@ -106,15 +106,17 @@ g = 9.81  # accn due to gravity
 F_fl = 3.3 # as per Kandlikar (2006)
 x_in = props["Inlet Quality"]
 mDot_ref = props["Refrigerant Flow Rate"]  # refrigerant mass flow rate [kg/s]
+mDotPerCircuit_ref = mDot_ref/nCircuits
 G_ref = mDot_ref / (nCircuits * 0.25 * math.pi * tubeID**2)
 P = np.zeros(nIter)  # [evapPressure]
 x = np.zeros(nIter)  # [x_in]
 H = np.zeros(nIter)  # [cp.PropsSI('H', 'P', evapPressure, 'Q', x_in, refrigerant)]
 T = np.zeros(nIter)  # [cp.PropsSI('T', 'P', evapPressure, 'Q', x_in, refrigerant)]
-Qtot = np.zeros(nIter)
+QtotPerSegment = np.zeros(nIter)
 length = np.zeros(nIter)
 localAirTemp = np.full(nIter, inletAirTemp)
-mDotPerSegment = mDot_air / (nIter / nRows)
+mDotPerSegment = mDot_air / (nCircuits * nIter / nRows)
+Qtot = 0
 
 for o in range(5):
     P[0] = opnPressure
@@ -122,7 +124,7 @@ for o in range(5):
     H[0] = cp.PropsSI("H", "P", opnPressure, "Q", x_in, refrigerant)
     T[0] = cp.PropsSI("T", "P", opnPressure, "Q", x_in, refrigerant)
     length[0] = 0
-    Qtot = 0
+    QtotPerSegment = 0
     QperSegment = np.zeros(nIter)  # We need to store Q to calculate air drop
 
     for u in range(nIter - 1):
@@ -191,7 +193,7 @@ for o in range(5):
             # test = Qair - Qref
             # print(test)
 
-            H[u + 1] = H[u] + (Qref / mDot_ref)
+            H[u + 1] = H[u] + (Qref / mDotPerCircuit_ref)
 
             f_satL = 0.079 / ((Re_satL) ** 0.25)
 
@@ -276,7 +278,7 @@ for o in range(5):
                     Twall = T[u]
                     Qref = 0
 
-            H[u + 1] = H[u] + (Qref / mDot_ref)
+            H[u + 1] = H[u] + (Qref / mDotPerCircuit_ref)
 
             dP = f_ref_v * (dl / tubeID) * (G_ref**2 / (2 * rho_v_sh))
 
@@ -287,12 +289,13 @@ for o in range(5):
         T[u + 1] = cp.PropsSI("T", "P", P[u + 1], "H", H[u + 1], refrigerant)
 
         QperSegment[u] += Qref
-        Qtot += Qref
+        QtotPerSegment += Qref
         length[u + 1] = length[u] + dl
 
         # if not 0 < x[u+1] < 1:
         #     print('Single Phase Start')
         #     break
+    Qtot = QtotPerSegment * nCircuits
     print(f"Pass {o+1}: Total Capacity = {Qtot:.2f} W")
 
     step = nIter // nRows
@@ -321,7 +324,7 @@ print(f"Final Total Capacity = {Qtot:.2f} W")
 
 
 # Generate saturation lines for plotting
-Psat = np.linspace(10e5, 5e5, 500)
+Psat = np.linspace(15e5, 5e5, 500)
 h_f_sat = [cp.PropsSI("H", "P", P, "Q", 0, refrigerant) for P in Psat]
 h_g_sat = [cp.PropsSI("H", "P", P, "Q", 1, refrigerant) for P in Psat]
 
