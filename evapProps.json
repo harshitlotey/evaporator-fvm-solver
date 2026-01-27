@@ -1,5 +1,5 @@
 {
-    "Number of Iterations" : 1000,
+    "Number of elements" : 1000,
     "No. of Rows" : 2,
     "No. of Holes" : 12,
     "Transverse Pitch" : 21,
@@ -15,7 +15,7 @@
     "Inlet Air RH" : 0.5,
     "Inlet Air Temp" : 35,
     "Volumetric Air flow" : 2000,
-    "Atmospheric Pressure" : 14.5,
+    "Atmospheric Pressure" : 14.7,
     "Inlet Quality" : 0.21,
     "Refrigerant Flow Rate" : 0.0141
 }
