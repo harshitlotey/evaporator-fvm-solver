@@ -1,6 +1,6 @@
 # Discretized Finite-Volume Evaporator Solver
  
-> **[Read the full re port here (PDF)](./report.pdf)**
+> **[Read the full report here (PDF)](./report.pdf)**
 
 A 1D numerical simulation of a fin-and-tube evaporator using a discretized control-volume approach. This solver models refrigerant phase change, pressure drop, and heat transfer row-by-row, integrating established empirical correlations for high-fidelity performance prediction.
 
